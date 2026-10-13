@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self' https://api.github.com; img-src 'self'; manifest-src 'self'">
+<title>QR Redirect</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="QR Redirect">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#ffffff">
+<style>
+  :root { color-scheme: light dark; --bg: #fff; --fg: #111; --muted: #666; --line: #ccc; --accent: #0a60ff; --err: #c00; --ok: #07780f; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111; --fg: #eee; --muted: #999; --line: #444; --accent: #4d8dff; --err: #ff6b6b; --ok: #5fd068; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.4 -apple-system, system-ui, sans-serif;
+         padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  main { max-width: 480px; margin: 0 auto; }
+  h1 { font-size: 1.3rem; margin: 0 0 1rem; }
+  label { display: block; margin: 1rem 0 .25rem; font-weight: 600; }
+  input { width: 100%; font-size: 16px; padding: .6rem; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: inherit; }
+  button { font-size: 17px; padding: .7rem 1rem; border-radius: 8px; border: 0; background: var(--accent); color: #fff; margin-top: 1rem; }
+  button.link { background: none; color: var(--accent); padding: .5rem 0; margin-top: .25rem; }
+  #live { word-break: break-all; color: var(--muted); }
+  #message { min-height: 1.5em; margin-top: 1rem; word-break: break-word; }
+  #message.error { color: var(--err); }
+  #message.ok { color: var(--ok); }
+  small { color: var(--muted); display: block; }
+</style>
+</head>
+<body>
+<main>
+  <h1>QR Redirect</h1>
+  <div>Live now:</div>
+  <div id="live">loading…</div>
+
+  <label for="url">New target URL</label>
+  <input id="url" type="url" inputmode="url" autocapitalize="none" autocorrect="off" placeholder="https://…">
+
+  <label for="token">GitHub token</label>
+  <input id="token" type="password" autocomplete="off" placeholder="stored on this device only">
+  <small>Fine-grained token for mrmarmac/go with Contents: read and write.</small>
+
+  <button id="save" type="button">Save</button>
+  <div id="message" role="status"></div>
+  <button id="forget" class="link" type="button">Forget token on this device</button>
+</main>
+<script src="admin.js"></script>
+</body>
+</html>
