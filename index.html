@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redirecting…</title>
+<style>
+  body { font: 17px/1.4 -apple-system, system-ui, sans-serif; margin: 0; padding: 2rem 16px; text-align: center; }
+  [hidden] { display: none; }
+</style>
+</head>
+<body>
+<p id="status">Redirecting…</p>
+<p id="error" hidden>This link is not configured right now.</p>
+<script>
+(async () => {
+  try {
+    const res = await fetch("target.json?t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const { url } = await res.json();
+    if (!/^https?:\/\//i.test(url)) throw new Error("bad scheme");
+    location.replace(url);
+  } catch (e) {
+    document.getElementById("status").hidden = true;
+    document.getElementById("error").hidden = false;
+  }
+})();
+</script>
+</body>
+</html>
